@@ -73,7 +73,7 @@ echo Enter the folder name to be created.
 set/p "name=>"
 md %name%
 echo folder created
-goto lockER
+goto LOCKER
 
 ::MDNINJA2
 echo No such folder exist. Do you want to create a folder with this name. (y/n)
@@ -84,6 +84,6 @@ if %cho%==n goto BEGIN
 if %cho%==N goto BEGIN
 echo invalid choice
 echo folder created
-goto lockER
+goto LOCKER
 
 :END
