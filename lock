@@ -1,0 +1,89 @@
+cls
+@ECHO OFF
+
+echo ______________________________**created by Saurabh Raj**____________________________________
+
+:BEGIN
+echo Press 0 to create a folder. Press 1 to lock a folder. Press 2 to unlock a locked folder. Enter END/end to exit.
+set/p "cho=>"
+if %cho%==0 goto MDNINJA
+if %cho%==1 goto LoCKER
+if %cho%==end goto END
+if %cho%==END goto END
+if %cho%==2 goto UNLoCKER
+echo invalid choice.
+goto BEGIN
+
+:LOCKER
+echo Enter the folder name to be locked.
+set/p "name=>"
+echo Enter your password
+set/p "pass=>"
+if EXIST %name%pass% goto UNLOCK_C
+if NOT EXIST %name% goto MDNINJA2
+
+:CONFIRM
+echo confirm folder lock (y/n)
+set/p "cho=>"
+if %cho%==y goto LOCk
+if %cho%==Y goto LOCk
+if %cho%==n goto END
+if %cho%==N goto END
+echo invalid choice
+goto CONFIRM
+
+:LOCk
+ren %name% %name%%pass%
+attrib +h +s %name%%pass%
+echo Folder locked.
+goto BEGIN
+
+:UNLOCKER
+echo Enter the folder name to be unlocked.
+set/p "name=>"
+echo Enter your password
+set/p "pass=>"
+if EXIST %name%%pass% goto UNLOCk_C
+echo Wrong name or password.
+goto BEGIN
+
+:UNLOCk_C
+echo There exists a locked folder with this name and password.
+echo Confirm folder unlock (y/n)
+set/p "cho=>"
+if %cho%==y goto UNLOCk
+if %cho%==Y goto UNLOCk
+if %cho%==n goto BEGIN
+if %cho%==N goto BEGIN
+echo invalid choice
+goto UNLOCK_c
+
+: UNLOCK
+attrib -h -s %name%%pass%
+ren %name%%pass% %name%
+echo folder unlocked
+goto BEGIN
+
+:FAIL
+invalid password
+goto END
+
+:MDNINJA
+echo Enter the folder name to be created.
+set/p "name=>"
+md %name%
+echo folder created
+goto lockER
+
+::MDNINJA2
+echo No such folder exist. Do you want to create a folder with this name. (y/n)
+set/p "cho=>"
+if %cho%==y md %name% echo Folder created. goto CONFIRM
+if %cho%==Y md %name% echo Folder created. goto CONFIRM
+if %cho%==n goto BEGIN
+if %cho%==N goto BEGIN
+echo invalid choice
+echo folder created
+goto lockER
+
+:END
